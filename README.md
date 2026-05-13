@@ -9,4 +9,5 @@ Documenting my transition from SDE → AI Engineer.
 
 ## Week 1 Progress
 - fast.ai image classifier — Imagenette, ResNet18
-- Final error_rate: [0.036%]
+- Final error_rate for model: [0.036%]; Imagenette classifier — ResNet18, 96.4% accuracy (1 epoch)
+- Live demo: https://huggingface.co/spaces/rheaupadhyay/imagenette-classifier
