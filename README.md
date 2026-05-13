@@ -9,4 +9,4 @@ Documenting my transition from SDE → AI Engineer.
 
 ## Week 1 Progress
 - fast.ai image classifier — Imagenette, ResNet18
-- Final error_rate: [0.04%]
+- Final error_rate: [0.036%]
