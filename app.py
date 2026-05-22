@@ -6,8 +6,9 @@ from anthropic import Anthropic
 import streamlit as st
 from langchain_chroma import Chroma
 
-@st.cache_resource
+client = Anthropic()
 
+@st.cache_resource
 def load_vector_store():
     embeddings = HuggingFaceEmbeddings(
         model_name="all-MiniLM-L6-v2"
@@ -22,3 +23,25 @@ def load_vector_store():
     retriever = vector_store.as_retriever()
     return retriever
   
+def ask_loanbot(question):
+    retrieved_docs = retriever.invoke(question)
+    context = "\n\n".join([doc.page_content for doc in retrieved_docs])
+
+    message = client.messages.create(
+        model="claude-sonnet-4-6",
+        max_tokens=1000,
+        messages=[
+            {
+                "role": "user",
+                "content": f"""Act as a legal loan document assistant. Answer the question using only the context provided.
+                If the answer is not in the context, say "I don't have that information in the document". Don't make up any answers, strictly stick to the context given to you."
+
+                Context:
+                {context}
+                
+                Question: {question}"""
+            }
+        ]
+    )
+
+    return message.content[0].text, retrieved_docs
