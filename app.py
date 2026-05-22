@@ -24,6 +24,7 @@ def load_vector_store():
     return retriever
   
 def ask_loanbot(question):
+    retriever = load_vector_store()
     retrieved_docs = retriever.invoke(question)
     context = "\n\n".join([doc.page_content for doc in retrieved_docs])
 
