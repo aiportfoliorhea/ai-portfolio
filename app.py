@@ -1,5 +1,4 @@
 from langchain_community.embeddings import HuggingFaceEmbeddings
-from langchain_text_splitters import RecursiveCharacterTextSplitter
 from anthropic import Anthropic
 import streamlit as st
 from langchain_chroma import Chroma
