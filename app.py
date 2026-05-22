@@ -1,6 +1,4 @@
-import chromadb
 from langchain_community.embeddings import HuggingFaceEmbeddings
-from langchain_community.document_loaders import TextLoader
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from anthropic import Anthropic
 import streamlit as st
@@ -46,3 +44,14 @@ def ask_loanbot(question):
     )
 
     return message.content[0].text, retrieved_docs
+
+
+st.title("SEC Document Assistant")
+input = st.text_input("Type your question")
+if st.button("Ask"):
+    response, retrieved_docs = ask_loanbot(input)
+    st.write(response)
+    with st.expander("Retrieved Docs"):
+        st.write(retrieved_docs)
+
+
