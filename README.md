@@ -1,4 +1,15 @@
-# AI Engineer Portfolio
+---
+title: SEC RAG
+emoji: 📄
+colorFrom: blue
+colorTo: green
+sdk: docker
+app_file: app.py
+pinned: false
+---
+
+
+#AI Engineer Portfolio
 
 Documenting my transition from SDE → AI Engineer.
 
