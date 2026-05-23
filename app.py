@@ -7,16 +7,18 @@ client = Anthropic()
 
 @st.cache_resource
 def load_vector_store():
-    embeddings = HuggingFaceEmbeddings(
-        model_name="all-MiniLM-L6-v2"
-    )
-    # connect to chroma
-    vector_store = Chroma(
-        collection_name="loanbot",
-        embedding_function=embeddings,
-        persist_directory="./chroma_db"
-    )
-    # return the retriever
+    from langchain.text_splitter import RecursiveCharacterTextSplitter
+    from langchain.schema import Document
+    
+    with open("jpm-10K-small-clean.txt", "r") as f:
+        text = f.read()
+    
+    splitter = RecursiveCharacterTextSplitter(chunk_size=500, chunk_overlap=50)
+    chunks = splitter.split_text(text)
+    docs = [Document(page_content=chunk) for chunk in chunks]
+    
+    embeddings = HuggingFaceEmbeddings(model_name="all-MiniLM-L6-v2")
+    vector_store = Chroma.from_documents(docs, embeddings)
     retriever = vector_store.as_retriever()
     return retriever
   
