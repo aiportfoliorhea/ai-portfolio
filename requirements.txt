@@ -1,0 +1,7 @@
+anthropic
+streamlit
+langchain
+langchain-community
+langchain-chroma
+chromadb
+sentence-transformers
