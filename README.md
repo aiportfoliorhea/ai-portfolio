@@ -40,6 +40,10 @@ What I got stuck on:
 What to carry forward tomorrow:
 - Thu: Run RAGAS evaluation, record actual scores
 - ## Evaluation — RAGAS Results
+## Architecture
+
+![RAG Pipeline](./rag-pipeline.png)
+
 
 Evaluated on 10 questions: 5 answerable from indexed data, 5 requiring 
 full 10-K (not in 100KB excerpt).
