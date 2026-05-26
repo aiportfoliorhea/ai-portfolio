@@ -119,6 +119,14 @@ Note: Answer Relevancy is 0.0 for unanswerable questions by design — the model
 
 ## Impact of Cohere Reranking
 
+### Eval Numbers
+| Metric | Before | After | Change |
+|---|---|---|---|
+| Faithfulness | 0.860 | 0.930 | +0.070 |
+| Answer Relevancy | 0.385 | 0.387 | ~flat |
+| Context Precision | 0.517 | 0.642 | +0.125 |
+| Context Recall | 0.800 | 0.800 | flat |
+
 Reranking improved context precision (+0.125) and faithfulness (+0.070), which means that the chunks passed to Claude became more relevant and the answers stayed closer to the source document.
 
 Context recall was unaffected — reranking reorders existing chunks but doesn't retrieve new ones, so coverage stayed the same.
@@ -127,10 +135,7 @@ Answer relevancy remained flat as well. For answerable questions it was essentia
 
 Q2 (business segments) continues to fail on both context precision and recall — this is likely a document coverage issue, not a retrieval issue. The relevant content may not be present in the indexed excerpt. (Still need to test with varying chunks, and overlap)
 
-### Eval Numbers
-| Metric | Before | After | Change |
-|---|---|---|---|
-| Faithfulness | 0.860 | 0.930 | +0.070 |
-| Answer Relevancy | 0.385 | 0.387 | ~flat |
-| Context Precision | 0.517 | 0.642 | +0.125 |
-| Context Recall | 0.800 | 0.800 | flat |
+| Answerable | Faithfulness | Answer Relevancy | Context Precision | Context Recall |
+|---|---|---|---|---|
+| Yes | 0.900 | 0.773 | 0.700 | 0.800 |
+| No | 0.960 | 0.000 | 0.583 | 0.800 |
