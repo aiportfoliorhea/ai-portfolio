@@ -48,6 +48,7 @@ What to carry forward tomorrow:
 Evaluated on 10 questions: 5 answerable from indexed data, 5 requiring 
 full 10-K (not in 100KB excerpt).
 
+### Eval Scores
 | Metric | Answerable | Unanswerable |
 |--------|-----------|--------------|
 | Faithfulness | 1.000 | 0.893 |
@@ -86,13 +87,13 @@ the segment description across chunk boundaries. Will try to increase overlap to
 ### Eval scores with langGraph (no re ranking)
 ## RAGAS Evaluation — Baseline (LangGraph query rewriter, no reranking)
 
-### Overall
-| Metric | Answerable | Unanswerable |
-|---|---|---|
-| Faithfulness | 0.800 | 0.920 |
-| Answer Relevancy | 0.771 | 0.000 |
-| Context Precision | 0.533 | 0.500 |
-| Context Recall | 0.800 | 0.800 |
+### Eval Scores
+| Metric | Answerable | Unanswerable | Overall
+|---|---|---|----|
+| Faithfulness | 0.800 | 0.920 | 0.860
+| Answer Relevancy | 0.771 | 0.000 | 0.385
+| Context Precision | 0.533 | 0.500 | 0.517
+| Context Recall | 0.800 | 0.800 | 0.800
 
 ### Per Question
 | Question | Faithfulness | Answer Relevancy | Context Precision | Context Recall | Answerable |
@@ -108,10 +109,27 @@ the segment description across chunk boundaries. Will try to increase overlap to
 | What is JPMorgan Chase's total revenue for 2025? | 1.00 | 0.000 | 0.417 | 1.0 | No |
 | What is JPMorgan Chase's return on equity? | 0.60 | 0.000 | 0.639 | 1.0 | No |
 
-### Averages by Answerability
+Note: Answer Relevancy is 0.0 for unanswerable questions by design — the model correctly responds with "I don't have that information" which RAGAS scores as irrelevant.
+
+## Impact of Cohere Reranking
+
+### Eval Scores
+| Metric | Before | After | Change |
+|---|---|---|---|
+| Faithfulness | 0.860 | 0.930 | +0.070 |
+| Answer Relevancy | 0.385 | 0.387 | ~flat |
+| Context Precision | 0.517 | 0.642 | +0.125 |
+| Context Recall | 0.800 | 0.800 | flat |
+
+Reranking improved context precision (+0.125) and faithfulness (+0.070), which means that the chunks passed to Claude became more relevant and the answers stayed closer to the source document.
+
+Context recall was unaffected — reranking reorders existing chunks but doesn't retrieve new ones, so coverage stayed the same.
+
+Answer relevancy remained flat as well. For answerable questions it was essentially unchanged (0.771 → 0.773). The unanswerable questions continue to score 0 by implementation, dragging the overall average down regardless of retrieval quality.
+
+Q2 (business segments) continues to fail on both context precision and recall — this is likely a document coverage issue, not a retrieval issue. The relevant content may not be present in the indexed excerpt. (Still need to test with varying chunks, and overlap)
+
 | Answerable | Faithfulness | Answer Relevancy | Context Precision | Context Recall |
 |---|---|---|---|---|
-| Yes | 0.80 | 0.771 | 0.533 | 0.8 |
-| No | 0.92 | 0.000 | 0.500 | 0.8 |
-
-> Note: Answer Relevancy is 0.0 for unanswerable questions by design — the model correctly responds with "I don't have that information" which RAGAS scores as irrelevant.
+| Yes | 0.900 | 0.773 | 0.700 | 0.800 |
+| No | 0.960 | 0.000 | 0.583 | 0.800 |
