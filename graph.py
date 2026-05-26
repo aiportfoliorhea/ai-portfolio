@@ -42,7 +42,7 @@ def generate_answer(state: SecRagState) -> SecRagState:
     response = client.messages.create(
         model="claude-sonnet-4-6",
         max_tokens=512,
-        system="Act as a legal loan document assistant. Answer the question using only the context provided. If the answer is not in the context, say 'I don't have that information in the document'",
+        system="Act as a SEC filing assistant. Answer the question using only the context provided. If the answer is not in the context, say 'I don't have that information in the document'",
         messages=[{
             "role": "user",
             "content": f"Context:\n{context}\n\nQuestion: {state['question']}\nAnswer:"
@@ -56,10 +56,10 @@ def build_rag_graph():
     graph = StateGraph(SecRagState)
     graph.add_node("rewrite", rewrite_query)
     graph.add_node("retrieve", retrieve)
-    graph.add_node("answer", generate_answer)
+    graph.add_node("generate", generate_answer)
     graph.set_entry_point("rewrite")
     graph.add_edge("rewrite", "retrieve")
-    graph.add_edge("retrieve", "answer")
-    graph.add_edge("answer", END)
+    graph.add_edge("retrieve", "generate")
+    graph.add_edge("generate", END)
     
     return graph.compile()

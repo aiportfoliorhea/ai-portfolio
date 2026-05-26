@@ -2,6 +2,11 @@ anthropic
 streamlit
 langchain
 langchain-community
+langchain-core
 langchain-chroma
+langchain-anthropic
+langchain-text-splitters
 chromadb
 sentence-transformers
+langgraph
+cohere
