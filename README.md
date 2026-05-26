@@ -88,7 +88,7 @@ the segment description across chunk boundaries. Will try to increase overlap to
 
 ### Overall
 | Metric | Answerable | Unanswerable | Overall
-|---|---|---|
+|---|---|---|----|
 | Faithfulness | 0.800 | 0.920 | 0.860
 | Answer Relevancy | 0.771 | 0.000 | 0.385
 | Context Precision | 0.533 | 0.500 | 0.517
