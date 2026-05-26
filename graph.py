@@ -2,6 +2,8 @@ from langgraph.graph import StateGraph, END
 from typing import TypedDict
 from anthropic import Anthropic
 from retriever import load_vector_store
+import cohere
+import os
 
 # 1. Define state
 class SecRagState(TypedDict):
@@ -30,9 +32,12 @@ Question: {state['question']}"""
 
 # 3. Retrieval node
 def retrieve(state: SecRagState) -> SecRagState:
+    cohere_client = cohere.Client(api_key=os.environ["COHERE_API_KEY"])
     retriever = load_vector_store()
     docs = retriever.invoke(state["rewritten_query"])
-    state["retrieved_docs"] = docs
+    cohere_response = cohere_client.rerank(top_n=3, documents=[doc.page_content for doc in docs], query=state["question"])
+    top_docs = [docs[result.index] for result in cohere_response.results]
+    state["retrieved_docs"] = top_docs
     return state
 
 # 4. Answer node

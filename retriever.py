@@ -1,12 +1,11 @@
 from langchain_community.embeddings import HuggingFaceEmbeddings
 import streamlit as st
 from langchain_chroma import Chroma
+from langchain_text_splitters import RecursiveCharacterTextSplitter
+from langchain_core.documents import Document
 
 @st.cache_resource
 def load_vector_store():
-    from langchain.text_splitter import RecursiveCharacterTextSplitter
-    from langchain.schema import Document
-    
     with open("jpm-10K-small-clean.txt", "r") as f:
         text = f.read()
     
