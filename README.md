@@ -48,7 +48,7 @@ What to carry forward tomorrow:
 Evaluated on 10 questions: 5 answerable from indexed data, 5 requiring 
 full 10-K (not in 100KB excerpt).
 
-### Eval Numbers
+### Eval Scores
 | Metric | Answerable | Unanswerable |
 |--------|-----------|--------------|
 | Faithfulness | 1.000 | 0.893 |
@@ -87,7 +87,7 @@ the segment description across chunk boundaries. Will try to increase overlap to
 ### Eval scores with langGraph (no re ranking)
 ## RAGAS Evaluation — Baseline (LangGraph query rewriter, no reranking)
 
-### Eval Numbers
+### Eval Scores
 | Metric | Answerable | Unanswerable | Overall
 |---|---|---|----|
 | Faithfulness | 0.800 | 0.920 | 0.860
@@ -109,17 +109,11 @@ the segment description across chunk boundaries. Will try to increase overlap to
 | What is JPMorgan Chase's total revenue for 2025? | 1.00 | 0.000 | 0.417 | 1.0 | No |
 | What is JPMorgan Chase's return on equity? | 0.60 | 0.000 | 0.639 | 1.0 | No |
 
-### Averages by Answerability
-| Answerable | Faithfulness | Answer Relevancy | Context Precision | Context Recall |
-|---|---|---|---|---|
-| Yes | 0.80 | 0.771 | 0.533 | 0.8 |
-| No | 0.92 | 0.000 | 0.500 | 0.8 |
-
 Note: Answer Relevancy is 0.0 for unanswerable questions by design — the model correctly responds with "I don't have that information" which RAGAS scores as irrelevant.
 
 ## Impact of Cohere Reranking
 
-### Eval Numbers
+### Eval Scores
 | Metric | Before | After | Change |
 |---|---|---|---|
 | Faithfulness | 0.860 | 0.930 | +0.070 |
