@@ -87,12 +87,12 @@ the segment description across chunk boundaries. Will try to increase overlap to
 ## RAGAS Evaluation — Baseline (LangGraph query rewriter, no reranking)
 
 ### Overall
-| Metric | Answerable | Unanswerable |
+| Metric | Answerable | Unanswerable | Overall
 |---|---|---|
-| Faithfulness | 0.800 | 0.920 |
-| Answer Relevancy | 0.771 | 0.000 |
-| Context Precision | 0.533 | 0.500 |
-| Context Recall | 0.800 | 0.800 |
+| Faithfulness | 0.800 | 0.920 | 0.860
+| Answer Relevancy | 0.771 | 0.000 | 0.385
+| Context Precision | 0.533 | 0.500 | 0.517
+| Context Recall | 0.800 | 0.800 | 0.800
 
 ### Per Question
 | Question | Faithfulness | Answer Relevancy | Context Precision | Context Recall | Answerable |
