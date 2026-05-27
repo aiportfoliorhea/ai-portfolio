@@ -3,13 +3,13 @@ import streamlit as st
 from langchain_chroma import Chroma
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_core.documents import Document
+from constants import CHUNK_SIZE, CHUNK_OVERLAP
 
 @st.cache_resource
 def load_vector_store():
     with open("jpm-10K-small-clean.txt", "r") as f:
         text = f.read()
-    
-    splitter = RecursiveCharacterTextSplitter(chunk_size=500, chunk_overlap=50)
+    splitter = RecursiveCharacterTextSplitter(chunk_size=CHUNK_SIZE, chunk_overlap=CHUNK_OVERLAP)
     chunks = splitter.split_text(text)
     docs = [Document(page_content=chunk) for chunk in chunks]
     
