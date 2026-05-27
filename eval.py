@@ -1,5 +1,6 @@
 import os
 
+from constants import CHUNK_OVERLAP, CHUNK_SIZE
 from graph import build_rag_graph
 from ragas import evaluate
 from ragas.metrics import (
@@ -14,6 +15,8 @@ from langchain_anthropic import ChatAnthropic
 from langchain_community.embeddings import HuggingFaceEmbeddings
 from datasets import Dataset
 import pandas as pd
+
+print(f"\n=== CHUNK CONFIG: size={CHUNK_SIZE}, overlap={CHUNK_OVERLAP} ===\n")
 
 test_questions = [
     # Answerable
@@ -104,3 +107,7 @@ print("\n=== AVERAGES BY ANSWERABILITY ===")
 print(df.groupby("answerable")[
     ["faithfulness", "answer_relevancy", "context_precision", "context_recall"]
 ].mean().round(3))
+
+df["chunk_size"] = CHUNK_SIZE
+df["chunk_overlap"] = CHUNK_OVERLAP
+df.to_csv(f"eval_results_chunk{CHUNK_SIZE}.csv", index=False)
