@@ -18,16 +18,6 @@ Documenting my transition from SDE → AI Engineer.
 - LLM Inference Optimizer (coming June)
 - Credit Risk ML Pipeline (coming July)
 
-## Week 1 Progress
-- Completed fast.ai Lessons 1–4 (model training, deployment basics)
-- Read Attention Is All You Need (abstract + intro) and Karpathy's Intro to LLMs
-- Wrote personal notes on tokens, embeddings, and attention
-- Set up Python environment, HuggingFace account, GitHub repo (ai-portfolio)
-- Deployed an image classifier to HuggingFace Spaces (live URL)
-- Called Anthropic API to answer a question about a loan document
-- Built LoanBot skeleton: FastAPI, ChromaDB, PDF loading
-- First commit to ai-portfolio with README (goal + timeline)
-
 ## Week 2 Progress
 - Watched LangChain RAGAS from scratch video (covered RAGAS metrics + re-ranking concept)
 - Fixed XBRL garbage issue in 10-K parsing (stripped hidden div, found usable text start)
@@ -133,3 +123,21 @@ Q2 (business segments) continues to fail on both context precision and recall �
 |---|---|---|---|---|
 | Yes | 0.900 | 0.773 | 0.700 | 0.800 |
 | No | 0.960 | 0.000 | 0.583 | 0.800 |
+
+
+## Chunk Experiment Results
+
+| Metric | Baseline (500/50) | 256/26 | 512/51 | 1024/102 |
+|---|---|---|---|---|
+| Faithfulness | 0.930 | 0.982 | 0.955 | 1.000 |
+| Answer Relevancy | 0.387 | 0.490 | 0.385 | 0.434 |
+| Context Precision | 0.642 | 0.850 | 0.700 | 0.850 |
+| Context Recall | 0.800 | 0.900 | 0.800 | 0.900 |
+
+Chunk Size Tradeoffs
+
+Small chunks (256): retrieval is enhanced and precise, but more chunks passed to LLM increases middle problem risk (performs worse if context is in the middle)
+Medium chunks (512): worst of both worlds in this dataset — splits content across boundaries losing context and necessary overlap
+Large chunks (1024): less precise retrieval but richer context per chunk, this increases faithfulness
+
+**Final config: 1024/102** — prioritize faithfulness, which is the critical metric for a SEC filing assistant.
